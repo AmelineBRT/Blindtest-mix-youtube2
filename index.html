@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Blind Mix</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f3f3;
+            color: #222;
+        }
+
+        header {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        header h1 {
+            margin: 0 0 10px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+
+        button {
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #playAll {
+            background: #35a853;
+            color: white;
+        }
+
+        #pauseAll {
+            background: #ea4335;
+            color: white;
+        }
+
+        .tracks {
+            max-width: 900px;
+            margin: auto;
+            padding: 10px;
+        }
+
+        .track {
+            background: white;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .track h2 {
+            margin-top: 0;
+            font-size: 18px;
+        }
+
+        .url-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .track-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .track-controls button {
+            background: #444;
+            color: white;
+            padding: 8px 12px;
+        }
+
+        .volume {
+            width: 150px;
+        }
+
+        .player {
+            width: 100%;
+            min-height: 80px;
+        }
+
+        @media (max-width: 600px) {
+
+            .track-controls {
+                flex-wrap: wrap;
+            }
+
+            .volume {
+                width: 100%;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🎵 Blind Mix</h1>
+    <p>Jusqu'à 7 chansons simultanément</p>
+</header>
+
+
+<div class="controls">
+    <button id="playAll" onclick="playAll()">▶ Lire les 7 pistes</button>
+    <button id="pauseAll" onclick="pauseAll()">⏸ Pause</button>
+</div>
+
+
+<div class="tracks">
+
+    <!-- PISTE 1 -->
+    <div class="track">
+        <h2>🎵 Piste 1</h2>
+
+        <input
+            class="url-input"
+            id="url1"
+            type="text"
+            placeholder="Colle ici ton lien YouTube"
+        >
+
+        <button onclick="loadVideo(1)">Charger la vidéo</button>
+
+        <div id="player1" class="player"></div>
+
+        <div class="track-controls">
+            <button onclick="playTrack(1)">▶</button>
+            <button onclick="pauseTrack(1)">⏸</button>
+
+            🔊
+            <input
+                class="volume"
+                type="range"
+                min="0"
+                max="100"
+                value="100"
+                oninput="changeVolume(1, this.value)"
+            >
+        </div>
+    </div>
+
+
+    <!-- PISTE 2 -->
+    <div class="track">
+        <h2>🎵 Piste 2</h2>
+
+        <input
+            class="url-input"
+            id="url2"
+            type="text"
+            placeholder="Colle ici ton lien YouTube"
+        >
+
+        <button onclick="loadVideo(2)">Charger la vidéo</button>
+
+        <div id="player2" class="player"></div>
+
+        <div class="track-controls">
+            <button onclick="playTrack(2)">▶</button>
+            <button onclick="pauseTrack(2)">⏸</button>
+
+            🔊
+            <input
+                class="volume"
+                type="range"
+                min="0"
+                max="100"
+                value="100"
+                oninput="changeVolume(2, this.value)"
+            >
+        </div>
+    </div>
+
+
+    <!-- PISTE 3 -->
+    <div class="track">
+        <h2>🎵 Piste 3</h2>
+
+        <input
+            class="url-input"
+            id="url3"
+            type="text"
+            placeholder="Colle ici ton lien YouTube"
+        >
+
+        <button onclick="loadVideo(3)">Charger la vidéo</button>
+
+        <div id="player3" class="player"></div>
+
+        <div class="track-controls">
+            <button onclick="playTrack(3)">▶</button>
+            <button onclick="pauseTrack(3)">⏸</button>
+
+            🔊
+            <input
+                class="volume"
+                type="range"
+                min="0"
+                max="100"
+                value="100"
+                oninput="changeVolume(3, this.value)"
+            >
+        </div>
+    </div>
+
+
+    <!-- PISTE 4 -->
+    <div class="track">
+        <h2>🎵 Piste 4</h2>
+
+        <input
+            class="url-input"
+            id="url4"
+            type="text"
+            placeholder="Colle ici ton lien YouTube"
+        >
+
+        <button onclick="loadVideo(4)">Charger la vidéo</button>
+
+        <div id="player4" class="player"></div>
+
+        <div class="track-controls">
+            <button onclick="playTrack(4)">▶</button>
+            <button onclick="pauseTrack(4)">⏸</button>
+
+            🔊
+            <input
+                class="volume"
+                type="range"
+                min="0"
+                max="100"
+                value="100"
+                oninput="changeVolume(4, this.value)"
+            >
+        </div>
+    </div>
+
+
+    <!-- PISTE 5 -->
+    <div class="track">
+        <h2>🎵 Piste 5</h2>
+
+        <input
+            class="url-input"
+            id="url5"
+            type="text"
+            placeholder="Colle ici ton lien YouTube"
+        >
+
+        <button onclick="loadVideo(5)">Charger la vidéo</button>
+
+        <div id="player5" class="player"></div>
+
+        <div class="track-controls">
+            <button onclick="playTrack(5)">▶</button>
+            <button onclick="pauseTrack(5)">⏸</button>
+
+            🔊
+            <input
+                class="volume"
+                type="range"
+                min="0"
+                max="100"
+                value="100"
+                oninput="changeVolume(5, this.value)"
+            >
+        </div>
+    </div>
+
+
+    <!-- PISTE 6 -->
+    <div class="track">
+        <h2>🎵 Piste 6</h2>
+
+        <input
+            class="url-input"
+            id="url6"
+            type="text"
+            placeholder="Colle ici ton lien YouTube"
+        >
+
+        <button onclick="loadVideo(6)">Charger la vidéo</button>
+
+        <div id="player6" class="player"></div>
+
+        <div class="track-controls">
+            <button onclick="playTrack(6)">▶</button>
+            <button onclick="pauseTrack(6)">⏸</button>
+
+            🔊
+            <input
+                class="volume"
+                type="range"
+                min="0"
+                max="100"
+                value="100"
+                oninput="changeVolume(6, this.value)"
+            >
+        </div>
+    </div>
+
+
+    <!-- PISTE 7 -->
+    <div class="track">
+        <h2>🎵 Piste 7</h2>
+
+        <input
+            class="url-input"
+            id="url7"
+            type="text"
+            placeholder="Colle ici ton lien YouTube"
+        >
+
+        <button onclick="loadVideo(7)">Charger la vidéo</button>
+
+        <div id="player7" class="player"></div>
+
+        <div class="track-controls">
+            <button onclick="playTrack(7)">▶</button>
+            <button onclick="pauseTrack(7)">⏸</button>
+
+            🔊
+            <input
+                class="volume"
+                type="range"
+                min="0"
+                max="100"
+                value="100"
+                oninput="changeVolume(7, this.value)"
+            >
+        </div>
+    </div>
+
+</div>
+
+
+<script src="https://www.youtube.com/iframe_api"></script>
+
+<script>
+
+    // Tableau qui contiendra nos 7 lecteurs YouTube
+    let players = [null, null, null, null, null, null, null];
+
+
+    // Cette fonction est appelée automatiquement
+    // lorsque l'API YouTube est prête
+    function onYouTubeIframeAPIReady() {
+        console.log("API YouTube prête !");
+    }
+
+
+    // Récupère l'identifiant d'une vidéo YouTube
+    function getVideoId(url) {
+
+        try {
+
+            const urlObject = new URL(url);
+
+            // Exemple :
+            // https://www.youtube.com/watch?v=ABC123
+
+            if (urlObject.hostname.includes("youtube.com")) {
+                return urlObject.searchParams.get("v");
+            }
+
+            // Exemple :
+            // https://youtu.be/ABC123
+
+            if (urlObject.hostname.includes("youtu.be")) {
+                return urlObject.pathname.substring(1);
+            }
+
+        } catch (error) {
+            console.log("Lien incorrect");
+        }
+
+        return null;
+    }
+
+
+    // Charge une vidéo dans une piste
+    function loadVideo(number) {
+
+        const url = document.getElementById("url" + number).value;
+
+        const videoId = getVideoId(url);
+
+        if (!videoId) {
+            alert("Lien YouTube incorrect !");
+            return;
+        }
+
+
+        // Si un lecteur existe déjà,
+        // on le détruit avant d'en créer un nouveau
+        if (players[number - 1]) {
+            players[number - 1].destroy();
+        }
+
+
+        players[number - 1] = new YT.Player(
+            "player" + number,
+            {
+                videoId: videoId,
+
+                playerVars: {
+                    autoplay: 0,
+                    controls: 1,
+                    rel: 0
+                },
+
+                events: {
+                    onReady: function(event) {
+                        event.target.setVolume(100);
+                    }
+                }
+            }
+        );
+    }
+
+
+    // Lecture d'une piste
+    function playTrack(number) {
+
+        const player = players[number - 1];
+
+        if (player) {
+            player.playVideo();
+        }
+    }
+
+
+    // Pause d'une piste
+    function pauseTrack(number) {
+
+        const player = players[number - 1];
+
+        if (player) {
+            player.pauseVideo();
+        }
+    }
+
+
+    // Change le volume d'une piste
+    function changeVolume(number, volume) {
+
+        const player = players[number - 1];
+
+        if (player) {
+            player.setVolume(volume);
+        }
+    }
+
+
+    // Lecture de toutes les pistes
+    function playAll() {
+
+        players.forEach(function(player) {
+
+            if (player) {
+                player.playVideo();
+            }
+
+        });
+    }
+
+
+    // Pause de toutes les pistes
+    function pauseAll() {
+
+        players.forEach(function(player) {
+
+            if (player) {
+                player.pauseVideo();
+            }
+
+        });
+    }
+
+</script>
+
+</body>
+</html>
